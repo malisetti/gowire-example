@@ -6,9 +6,9 @@ import (
 )
 
 func main() {
-	sayHello()
+	sayHello(hello.Message)
 }
 
-func sayHello() {
-	fmt.Println(hello.Message)
+func sayHello(msg string) {
+	fmt.Println(msg)
 }
