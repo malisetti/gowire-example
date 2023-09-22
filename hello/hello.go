@@ -2,11 +2,11 @@ package hello
 
 import (
 	"fmt"
-	"os"
+	"io"
 )
 
 const Message = "Hello, World!"
 
-func Say(msg string) {
-	fmt.Fprintln(os.Stdout, msg)
+func Say(w io.Writer, msg string) {
+	fmt.Fprintln(w, msg)
 }
