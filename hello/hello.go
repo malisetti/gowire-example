@@ -1,9 +1,12 @@
 package hello
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+)
 
 const Message = "Hello, World!"
 
 func Say(msg string) {
-	fmt.Println(msg)
+	fmt.Fprintln(os.Stdout, msg)
 }
