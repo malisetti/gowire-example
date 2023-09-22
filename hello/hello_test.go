@@ -19,7 +19,7 @@ func TestSay(t *testing.T) {
 		{
 			name: "NewLine Sayer",
 			args: args{
-				sayer: &hello.NewLineSayer{},
+				sayer: hello.NewSayer(hello.NewLine{}),
 				msg:   hello.Message,
 			},
 			want: hello.Message + "\n",
@@ -27,7 +27,7 @@ func TestSay(t *testing.T) {
 		{
 			name: "Exact Sayer",
 			args: args{
-				sayer: &hello.ExactSayer{},
+				sayer: hello.NewSayer(hello.Exact{}),
 				msg:   hello.Message,
 			},
 			want: hello.Message,
@@ -35,7 +35,7 @@ func TestSay(t *testing.T) {
 		{
 			name: "No Sayer",
 			args: args{
-				sayer: &hello.NoSayer{},
+				sayer: hello.NewSayer(hello.Zero{}),
 				msg:   hello.Message,
 			},
 			want: "",
@@ -46,10 +46,10 @@ func TestSay(t *testing.T) {
 			w := &bytes.Buffer{}
 			_, err := tt.args.sayer.Say(w, tt.args.msg)
 			if err != nil {
-				t.Fatalf("could not say %s, failed with %v", hello.Message, err)
+				t.Fatalf("could not say \"%s\", failed with %v", hello.Message, err)
 			}
-			if gotW := w.String(); gotW != tt.want {
-				t.Errorf("Say() = %v, want %v", gotW, tt.want)
+			if got := w.String(); got != tt.want {
+				t.Errorf("Say() = %v, want %v", got, tt.want)
 			}
 		})
 	}
