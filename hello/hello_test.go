@@ -19,15 +19,15 @@ func TestSay(t *testing.T) {
 		{
 			name: "NewLine Sayer",
 			args: args{
-				sayer: hello.NewLineSayer{},
+				sayer: &hello.NewLineSayer{},
 				msg:   hello.Message,
 			},
 			want: hello.Message + "\n",
 		},
 		{
-			name: "Copy Sayer",
+			name: "Exact Sayer",
 			args: args{
-				sayer: hello.CopySayer{},
+				sayer: &hello.ExactSayer{},
 				msg:   hello.Message,
 			},
 			want: hello.Message,
@@ -35,7 +35,7 @@ func TestSay(t *testing.T) {
 		{
 			name: "No Sayer",
 			args: args{
-				sayer: hello.NoSayer{},
+				sayer: &hello.NoSayer{},
 				msg:   hello.Message,
 			},
 			want: "",
