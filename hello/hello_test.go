@@ -3,53 +3,54 @@ package hello_test
 import (
 	"bytes"
 	"example/hello"
-	"strings"
 	"testing"
 )
 
 func TestSay(t *testing.T) {
-	var buf bytes.Buffer
-	hello.Say(&buf, hello.Message)
-
-	output := strings.TrimRight(buf.String(), "\n")
-	if output != hello.Message {
-		t.Fatalf("output: '%s' not equals message: '%s'", output, hello.Message)
+	type args struct {
+		sayer hello.Sayer
+		msg   string
 	}
-
-	buf.Reset()
-
-	var sayer hello.Sayer
-	sayer = hello.NewLineSayer{}
-	_, err := sayer.Say(&buf, hello.Message)
-	if err != nil {
-		t.Fatalf("default sayer could not say %s", hello.Message)
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		{
+			name: "NewLine Sayer",
+			args: args{
+				sayer: hello.NewLineSayer{},
+				msg:   hello.Message,
+			},
+			want: hello.Message + "\n",
+		},
+		{
+			name: "Copy Sayer",
+			args: args{
+				sayer: hello.CopySayer{},
+				msg:   hello.Message,
+			},
+			want: hello.Message,
+		},
+		{
+			name: "No Sayer",
+			args: args{
+				sayer: hello.NoSayer{},
+				msg:   hello.Message,
+			},
+			want: "",
+		},
 	}
-
-	output = strings.TrimRight(buf.String(), "\n")
-	if output != hello.Message {
-		t.Fatalf("output: '%s' not equals message: '%s'", output, hello.Message)
-	}
-
-	buf.Reset()
-
-	sayer = hello.CopySayer{}
-	_, err = sayer.Say(&buf, hello.Message)
-	if err != nil {
-		t.Fatalf("copy sayer could not say %s", hello.Message)
-	}
-	output = buf.String()
-	if output != hello.Message {
-		t.Fatalf("output: '%s' not equals message: '%s'", output, hello.Message)
-	}
-
-	buf.Reset()
-
-	sayer = hello.NoSayer{}
-	n, err := sayer.Say(&buf, hello.Message)
-	if err != nil {
-		t.Fatalf("no sayer could not say %s", hello.Message)
-	}
-	if n > 0 || len(buf.String()) > 0 {
-		t.Fatalf("output is not empty")
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			w := &bytes.Buffer{}
+			_, err := tt.args.sayer.Say(w, tt.args.msg)
+			if err != nil {
+				t.Fatalf("could not say %s, failed with %v", hello.Message, err)
+			}
+			if gotW := w.String(); gotW != tt.want {
+				t.Errorf("Say() = %v, want %v", gotW, tt.want)
+			}
+		})
 	}
 }
