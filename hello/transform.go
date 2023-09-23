@@ -29,25 +29,25 @@ type TransformerProviderConfig interface {
 func NewTransform(cfg TransformerProviderConfig) Transformer {
 	switch cfg.GetTransformerProviderType() {
 	case ZeroTransform:
-		return newZeroTransformer()
+		return NewZeroTransformer()
 	case NewLineTransform:
-		return newLineTransformer()
+		return NewLineTransformer()
 	case ExactTransform:
-		return newExactTransformer()
+		return NewExactTransformer()
 	default:
 		panic("invalid transform")
 	}
 }
 
-func newLineTransformer() *NewLine {
+func NewLineTransformer() *NewLine {
 	return &NewLine{}
 }
 
-func newExactTransformer() *Exact {
+func NewExactTransformer() *Exact {
 	return &Exact{}
 }
 
-func newZeroTransformer() *Zero {
+func NewZeroTransformer() *Zero {
 	return &Zero{}
 }
 

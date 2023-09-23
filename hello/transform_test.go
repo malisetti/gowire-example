@@ -2,6 +2,7 @@ package hello_test
 
 import (
 	"example/hello"
+	"example/internal/config"
 	"testing"
 )
 
@@ -10,39 +11,44 @@ func TestTransforms(t *testing.T) {
 		s string
 	}
 	tests := []struct {
-		name string
-		t    hello.Transformer
-		args args
-		want string
+		name      string
+		args      args
+		transform hello.TransformType
+		want      string
 	}{
 		{
 			name: "NewLine",
-			t:    &hello.NewLine{},
 			args: args{
 				s: hello.Message,
 			},
-			want: hello.Message + "\n",
+			transform: hello.NewLineTransform,
+			want:      hello.Message + "\n",
 		},
 		{
 			name: "Exact",
-			t:    &hello.Exact{},
 			args: args{
 				s: hello.Message,
 			},
-			want: hello.Message,
+			transform: hello.ExactTransform,
+			want:      hello.Message,
 		},
 		{
 			name: "Zero",
-			t:    &hello.Zero{},
 			args: args{
 				s: hello.Message,
 			},
-			want: "",
+			transform: hello.ZeroTransform,
+			want:      "",
 		},
 	}
 	for _, tt := range tests {
+		tt := tt
 		t.Run(tt.name, func(t *testing.T) {
-			if got := tt.t.Transform(tt.args.s); got != tt.want {
+			t.Parallel()
+			cfg := config.GetCfg()
+			cfg.TransformerProviderType = tt.transform
+			tr := hello.NewTransform(cfg)
+			if got := tr.Transform(tt.args.s); got != tt.want {
 				t.Errorf("%v.Transform() = %v, want %v", tt.name, got, tt.want)
 			}
 		})
