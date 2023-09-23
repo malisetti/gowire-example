@@ -23,9 +23,9 @@ func NewSayer(t Transformer) Sayer {
 
 func (es *ExactSayer) Say(w io.Writer, msg string) (int, error) {
 	es.w = w
-	return w.Write([]byte(es.t.Transform(msg)))
+	return es.write([]byte(es.t.Transform(msg)))
 }
 
-func (es *ExactSayer) Write(p []byte) (int, error) {
+func (es *ExactSayer) write(p []byte) (int, error) {
 	return es.w.Write(p)
 }

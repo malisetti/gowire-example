@@ -10,6 +10,10 @@ type (
 	Zero    struct{}
 )
 
+func NewDefaultTransformer() Transformer {
+	return NewLine{}
+}
+
 func (NewLine) Transform(s string) string {
 	return s + "\n"
 }
