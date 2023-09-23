@@ -3,6 +3,7 @@ package hello_test
 import (
 	"example/hello"
 	"example/internal/config"
+	"strings"
 	"testing"
 )
 
@@ -39,6 +40,14 @@ func TestTransforms(t *testing.T) {
 			},
 			transform: hello.ZeroTransform,
 			want:      "",
+		},
+		{
+			name: "Upper",
+			args: args{
+				s: hello.Message,
+			},
+			transform: hello.UpperTransform,
+			want:      strings.ToUpper(hello.Message),
 		},
 	}
 	for _, tt := range tests {
