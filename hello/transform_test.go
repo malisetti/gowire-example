@@ -54,9 +54,10 @@ func TestTransforms(t *testing.T) {
 		tt := tt
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			cfg := config.GetCfg()
-			cfg.TransformerProviderType = tt.transform
-			tr := hello.NewTransform(cfg)
+			cfg := config.TransformerProviderConfig{
+				TransformerProviderType: tt.transform,
+			}
+			tr := hello.NewTransform(&cfg)
 			if got := tr.Transform(tt.args.s); got != tt.want {
 				t.Errorf("%v.Transform() = %v, want %v", tt.name, got, tt.want)
 			}
