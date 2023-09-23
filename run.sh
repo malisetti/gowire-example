@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
 
+./wire.sh
+./test.sh
 # -transform 1
 go run example/cmd/hello "${@:1}"

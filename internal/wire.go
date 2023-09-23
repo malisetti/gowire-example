@@ -5,21 +5,18 @@ package internal
 
 import (
 	"example/hello"
-	"example/internal/config"
 	"example/valet"
 	"io"
 
 	"github.com/google/wire"
 )
 
-var appSet = wire.NewSet(config.ConfigSet, hello.HelloSet, hello.TransformSet, valet.ValetSet)
-
 func InitializeSayer(w io.Writer, cfg hello.TransformerProviderConfig) *hello.ExactSayer {
 	wire.Build(hello.HelloSet, hello.TransformSet)
 	return &hello.ExactSayer{}
 }
 
-func InitializeValetParker(w io.Writer, message string) *valet.ValetPark {
-	wire.Build(appSet)
+func InitializeValetParker(w io.Writer, cfg hello.TransformerProviderConfig, message string) *valet.ValetPark {
+	wire.Build(hello.HelloSet, hello.TransformSet, valet.ValetSet)
 	return &valet.ValetPark{}
 }

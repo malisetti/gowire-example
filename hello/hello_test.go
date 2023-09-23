@@ -12,8 +12,7 @@ func TestSay(t *testing.T) {
 	type args struct {
 		msg string
 	}
-	var buf bytes.Buffer
-	cfg := config.GetCfg()
+
 	tests := []struct {
 		name      string
 		transform hello.TransformType
@@ -46,7 +45,11 @@ func TestSay(t *testing.T) {
 		},
 	}
 	for _, tt := range tests {
+		tt := tt
 		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			var buf bytes.Buffer
+			cfg := config.GetCfg()
 			cfg.TransformerProviderType = tt.transform
 			sayer := internal.InitializeSayer(&buf, cfg)
 			_, err := sayer.Say(tt.args.msg)
