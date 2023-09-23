@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -ex
+
 ./wire.sh
 ./test.sh
 # -transform 1

@@ -12,11 +12,15 @@ type Config interface {
 	hello.TransformerProviderConfig
 }
 
-type Configuration struct {
+type TransformerProviderConfig struct {
 	TransformerProviderType hello.TransformType
 }
 
-func (cfg *Configuration) GetTransformerProviderType() hello.TransformType {
+type Configuration struct {
+	TransformerProviderConfig
+}
+
+func (cfg *TransformerProviderConfig) GetTransformerProviderType() hello.TransformType {
 	return cfg.TransformerProviderType
 }
 
