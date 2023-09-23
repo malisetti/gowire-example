@@ -17,7 +17,7 @@ func TestTransforms(t *testing.T) {
 	}{
 		{
 			name: "NewLine",
-			t:    hello.NewLine{},
+			t:    &hello.NewLine{},
 			args: args{
 				s: hello.Message,
 			},
@@ -25,7 +25,7 @@ func TestTransforms(t *testing.T) {
 		},
 		{
 			name: "Exact",
-			t:    hello.Exact{},
+			t:    &hello.Exact{},
 			args: args{
 				s: hello.Message,
 			},
@@ -33,7 +33,7 @@ func TestTransforms(t *testing.T) {
 		},
 		{
 			name: "Zero",
-			t:    hello.Zero{},
+			t:    &hello.Zero{},
 			args: args{
 				s: hello.Message,
 			},

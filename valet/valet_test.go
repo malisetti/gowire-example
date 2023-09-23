@@ -1,6 +1,7 @@
 package valet_test
 
 import (
+	"bytes"
 	"example/hello"
 	"example/valet"
 	"testing"
@@ -13,6 +14,7 @@ func TestValetPark_Park(t *testing.T) {
 	type args struct {
 		v valet.Vehicle
 	}
+	var buf bytes.Buffer
 	tests := []struct {
 		name    string
 		fields  fields
@@ -22,7 +24,7 @@ func TestValetPark_Park(t *testing.T) {
 		{
 			name: "Test Valet1",
 			fields: fields{
-				helloSayer: hello.NewSayer(hello.Exact{}),
+				helloSayer: hello.NewSayer(&buf, &hello.Exact{}),
 			},
 			args: args{
 				v: valet.Car{},
@@ -32,10 +34,11 @@ func TestValetPark_Park(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			vp := valet.NewValetParker(tt.fields.helloSayer)
+			vp := valet.NewValetParker(tt.fields.helloSayer, hello.Message)
 			if err := vp.Park(tt.args.v); (err != nil) != tt.wantErr {
 				t.Errorf("ValetPark.Park() error = %v, wantErr %v", err, tt.wantErr)
 			}
 		})
+		buf.Reset()
 	}
 }

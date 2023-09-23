@@ -11,6 +11,7 @@ func TestSay(t *testing.T) {
 		sayer hello.Sayer
 		msg   string
 	}
+	var buf bytes.Buffer
 	tests := []struct {
 		name string
 		args args
@@ -19,7 +20,7 @@ func TestSay(t *testing.T) {
 		{
 			name: "NewLine Sayer",
 			args: args{
-				sayer: hello.NewSayer(hello.NewLine{}),
+				sayer: hello.NewSayer(&buf, &hello.NewLine{}),
 				msg:   hello.Message,
 			},
 			want: hello.Message + "\n",
@@ -27,7 +28,7 @@ func TestSay(t *testing.T) {
 		{
 			name: "Exact Sayer",
 			args: args{
-				sayer: hello.NewSayer(hello.Exact{}),
+				sayer: hello.NewSayer(&buf, &hello.Exact{}),
 				msg:   hello.Message,
 			},
 			want: hello.Message,
@@ -35,7 +36,7 @@ func TestSay(t *testing.T) {
 		{
 			name: "No Sayer",
 			args: args{
-				sayer: hello.NewSayer(hello.Zero{}),
+				sayer: hello.NewSayer(&buf, &hello.Zero{}),
 				msg:   hello.Message,
 			},
 			want: "",
@@ -43,14 +44,14 @@ func TestSay(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			w := &bytes.Buffer{}
-			_, err := tt.args.sayer.Say(w, tt.args.msg)
+			_, err := tt.args.sayer.Say(tt.args.msg)
 			if err != nil {
 				t.Fatalf("could not say \"%s\", failed with %v", hello.Message, err)
 			}
-			if got := w.String(); got != tt.want {
+			if got := buf.String(); got != tt.want {
 				t.Errorf("Say() = %v, want %v", got, tt.want)
 			}
+			buf.Reset()
 		})
 	}
 }

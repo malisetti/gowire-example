@@ -2,12 +2,14 @@ package hello
 
 import (
 	"io"
+
+	"github.com/google/wire"
 )
 
 const Message = "Hello, World!"
 
 type Sayer interface {
-	Say(w io.Writer, msg string) (n int, err error)
+	Say(msg string) (n int, err error)
 }
 
 type ExactSayer struct {
@@ -15,14 +17,19 @@ type ExactSayer struct {
 	t Transformer
 }
 
-func NewSayer(t Transformer) Sayer {
+func NewSayer(w io.Writer, t Transformer) *ExactSayer {
 	return &ExactSayer{
+		w: w,
 		t: t,
 	}
 }
 
-func (es *ExactSayer) Say(w io.Writer, msg string) (int, error) {
-	es.w = w
+var HelloSet = wire.NewSet(
+	NewSayer,
+	wire.Bind(new(Sayer), new(*ExactSayer)),
+)
+
+func (es *ExactSayer) Say(msg string) (int, error) {
 	return es.write([]byte(es.t.Transform(msg)))
 }
 
