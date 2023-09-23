@@ -16,9 +16,8 @@ import (
 
 // Injectors from wire.go:
 
-func InitializeSayer(w io.Writer, t hello.TransformType) *hello.ExactSayer {
-	configuration := config.GetCfg()
-	transformer := hello.NewTransform(configuration)
+func InitializeSayer(w io.Writer, cfg hello.TransformerProviderConfig) *hello.ExactSayer {
+	transformer := hello.NewTransform(cfg)
 	exactSayer := hello.NewSayer(w, transformer)
 	return exactSayer
 }

@@ -1,6 +1,8 @@
 package hello
 
-import "github.com/google/wire"
+import (
+	"github.com/google/wire"
+)
 
 type Transformer interface {
 	Transform(string) string
@@ -30,8 +32,10 @@ func NewTransform(cfg TransformerProviderConfig) Transformer {
 		return newZeroTransformer()
 	case NewLineTransform:
 		return newLineTransformer()
-	default:
+	case ExactTransform:
 		return newExactTransformer()
+	default:
+		panic("invalid transform")
 	}
 }
 

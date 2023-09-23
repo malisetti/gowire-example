@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 
-go run example/cmd/hello
+# -transform 1
+go run example/cmd/hello "${@:1}"

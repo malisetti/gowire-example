@@ -14,8 +14,8 @@ import (
 
 var appSet = wire.NewSet(config.ConfigSet, hello.HelloSet, hello.TransformSet, valet.ValetSet)
 
-func InitializeSayer(w io.Writer, t hello.TransformType) *hello.ExactSayer {
-	wire.Build(appSet)
+func InitializeSayer(w io.Writer, cfg hello.TransformerProviderConfig) *hello.ExactSayer {
+	wire.Build(hello.HelloSet, hello.TransformSet)
 	return &hello.ExactSayer{}
 }
 

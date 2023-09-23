@@ -39,6 +39,6 @@ func GetCfg() *Configuration {
 
 var ConfigSet = wire.NewSet(
 	GetCfg,
-	wire.Bind(new(Config), new(*Configuration)),
+	// wire.Bind(new(Config), new(*Configuration)),
 	wire.Bind(new(hello.TransformerProviderConfig), new(*Configuration)),
 )
