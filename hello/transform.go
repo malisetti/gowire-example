@@ -1,6 +1,8 @@
 package hello
 
 import (
+	"strings"
+
 	"github.com/google/wire"
 )
 
@@ -12,6 +14,7 @@ type (
 	NewLine struct{}
 	Exact   struct{}
 	Zero    struct{}
+	Upper   struct{}
 )
 
 type TransformType int
@@ -20,6 +23,7 @@ const (
 	ZeroTransform TransformType = iota
 	NewLineTransform
 	ExactTransform
+	UpperTransform
 )
 
 type TransformerProviderConfig interface {
@@ -34,6 +38,8 @@ func NewTransform(cfg TransformerProviderConfig) Transformer {
 		return NewLineTransformer()
 	case ExactTransform:
 		return NewExactTransformer()
+	case UpperTransform:
+		return NewUpperTransformer()
 	default:
 		panic("invalid transform")
 	}
@@ -51,6 +57,10 @@ func NewZeroTransformer() *Zero {
 	return &Zero{}
 }
 
+func NewUpperTransformer() *Upper {
+	return &Upper{}
+}
+
 var TransformSet = wire.NewSet(
 	NewTransform,
 )
@@ -65,4 +75,8 @@ func (*Exact) Transform(s string) string {
 
 func (*Zero) Transform(s string) string {
 	return ""
+}
+
+func (*Upper) Transform(s string) string {
+	return strings.ToUpper(s)
 }
