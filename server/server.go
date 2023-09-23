@@ -4,6 +4,7 @@ import (
 	"example/hello"
 	"example/internal"
 	"example/internal/config"
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -38,6 +39,11 @@ func TransformServer(w http.ResponseWriter, r *http.Request) {
 	message := q.Get("message")
 
 	t, _ := strconv.Atoi(transform)
+	if hello.TransformType(t) < hello.ZeroTransform || hello.TransformType(t) > hello.UpperTransform {
+		w.WriteHeader(http.StatusBadRequest)
+		fmt.Fprintf(w, "invalid transform\n")
+		return
+	}
 	cfg := config.TransformerProviderConfig{
 		TransformerProviderType: hello.TransformType(t),
 	}
