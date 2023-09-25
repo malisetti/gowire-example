@@ -1,7 +1,7 @@
 # gowire-example
 
 ## Overview
-This is a demonstration of a Go application that utilizes the Wire framework for dependency injection. The application is an HTTP server that exposes string transformations as an API. It accepts requests with parameters such as /?transform=0&message=hello to perform various string transformations.
+This is a demonstration of a Go application that utilizes the Wire framework for dependency injection. The application is an HTTP server that exposes string transformations as an API. It accepts requests with parameters such as  `/?transform=0&message=hello` to perform various string transformations.
 
 ## Packages
 - `cmd/hello` is the main package which uses other packages and starts a http server
@@ -32,6 +32,7 @@ This is a demonstration of a Go application that utilizes the Wire framework for
 - https://github.com/google/wire
 - https://go.dev/blog/wire
 - https://github.com/google/wire/tree/main/docs
+- https://en.wikipedia.org/wiki/SOLID
 
 ## PRs are welcome
 
