@@ -10,9 +10,7 @@ import (
 	"github.com/google/wire"
 )
 
-type ITransformHandler interface {
-	ServeHTTP(w http.ResponseWriter, r *http.Request)
-}
+type ITransformHandler http.Handler
 
 type TransformHandler struct {
 	cfg config.TransformHandlerConfig
@@ -33,7 +31,6 @@ func (th *TransformHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	q := r.URL.Query()
 	transform := q.Get("transform")
 	message := q.Get("message")
-	_ = message
 	t, _ := strconv.Atoi(transform)
 	if hello.TransformType(t) < hello.ZeroTransform || hello.TransformType(t) > hello.UpperTransform {
 		w.WriteHeader(http.StatusBadRequest)
