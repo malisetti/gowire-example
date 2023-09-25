@@ -10,7 +10,7 @@ import (
 )
 
 func TestTransformServer(t *testing.T) {
-	req1, _ := http.NewRequest(http.MethodGet, fmt.Sprintf("/?transform=%s&message=%s", "0", hello.Message), nil)
+	req1, _ := http.NewRequest(http.MethodGet, fmt.Sprintf("/?transform=%d&message=%s", hello.ZeroTransform, hello.Message), nil)
 	type args struct {
 		w *httptest.ResponseRecorder
 		r *http.Request
