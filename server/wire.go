@@ -10,7 +10,7 @@ import (
 	"github.com/google/wire"
 )
 
-func InitializeServer(cfg config.IConfiguration) *Server {
+func InitializeServer() *Server {
 	wire.Build(config.ConfigSet, handlers.HandlerSet, ServerSet)
 	return &Server{}
 }

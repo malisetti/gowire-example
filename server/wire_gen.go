@@ -13,12 +13,9 @@ import (
 
 // Injectors from wire.go:
 
-func InitializeServer(cfg config.IConfiguration) *Server {
+func InitializeServer() *Server {
 	configuration := config.GetCfg()
 	transformHandler := handlers.NewTransformHandler(configuration)
-	server := &Server{
-		Cfg:              configuration,
-		TransformHandler: transformHandler,
-	}
+	server := NewServer(configuration, transformHandler)
 	return server
 }

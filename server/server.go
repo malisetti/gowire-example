@@ -17,8 +17,16 @@ type Server struct {
 	TransformHandler handlers.ITransformHandler
 }
 
+func NewServer(cfg config.IServerConfig, transformHandler handlers.ITransformHandler) *Server {
+	return &Server{
+		Cfg:              cfg,
+		TransformHandler: transformHandler,
+	}
+}
+
 var ServerSet = wire.NewSet(
-	wire.Struct(new(Server), "*"),
+	// wire.Struct(new(Server), "*"),
+	NewServer,
 	wire.Bind(new(IServer), new(*Server)),
 )
 
