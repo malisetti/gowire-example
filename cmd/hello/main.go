@@ -1,11 +1,11 @@
 package main
 
 import (
+	"example/config"
 	"example/hello"
-	"example/internal"
-	"example/internal/config"
 	"example/server"
 	"example/valet"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -14,12 +14,12 @@ import (
 func main() {
 	// hello.NewSayer(os.Stdout, &hello.NewLine{}).Say(hello.Message)
 	cfg := config.GetCfg()
-	internal.InitializeSayer(os.Stdout, cfg).Say(hello.Message)
-	parker := internal.InitializeValetParker(os.Stdout, cfg, hello.Message)
-	_ = parker.Park(valet.Car{})
+	hello.InitializeSayer(hello.ExactTransform).Say(os.Stdout, hello.Message)
+	parker := valet.InitializeValetParker(hello.ExactTransform, hello.Message)
+	_ = parker.Park(os.Stdout, valet.Car{})
 
-	s := server.NewServer()
-	err := http.ListenAndServe(":3333", s.GetMux())
+	server := server.InitializeServer(cfg)
+	err := http.ListenAndServe(fmt.Sprintf(":%d", cfg.GetPort()), server.GetMux())
 	if err != nil {
 		log.Fatalln(err)
 	}

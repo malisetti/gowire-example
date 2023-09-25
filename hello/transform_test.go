@@ -2,7 +2,6 @@ package hello_test
 
 import (
 	"example/hello"
-	"example/internal/config"
 	"strings"
 	"testing"
 )
@@ -54,10 +53,7 @@ func TestTransforms(t *testing.T) {
 		tt := tt
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			cfg := config.TransformerProviderConfig{
-				TransformerProviderType: tt.transform,
-			}
-			tr := hello.NewTransform(&cfg)
+			tr := hello.NewTransform(tt.transform)
 			if got := tr.Transform(tt.args.s); got != tt.want {
 				t.Errorf("%v.Transform() = %v, want %v", tt.name, got, tt.want)
 			}

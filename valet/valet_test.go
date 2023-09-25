@@ -3,8 +3,6 @@ package valet_test
 import (
 	"bytes"
 	"example/hello"
-	"example/internal"
-	"example/internal/config"
 	"example/valet"
 	"testing"
 )
@@ -49,9 +47,8 @@ func TestValetPark_Park(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 			var buf bytes.Buffer
-			cfg := config.GetCfg()
-			vp := internal.InitializeValetParker(&buf, cfg, hello.Message)
-			if err := vp.Park(tt.args.v); (err != nil) != tt.wantErr {
+			vp := valet.InitializeValetParker(tt.trasform, hello.Message)
+			if err := vp.Park(&buf, tt.args.v); (err != nil) != tt.wantErr {
 				t.Errorf("ValetPark.Park() error = %v, wantErr %v", err, tt.wantErr)
 			}
 		})

@@ -3,8 +3,6 @@ package hello_test
 import (
 	"bytes"
 	"example/hello"
-	"example/internal"
-	"example/internal/config"
 	"testing"
 )
 
@@ -49,10 +47,8 @@ func TestSay(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 			var buf bytes.Buffer
-			cfg := config.GetCfg()
-			cfg.TransformerProviderType = tt.transform
-			sayer := internal.InitializeSayer(&buf, cfg)
-			_, err := sayer.Say(tt.args.msg)
+			sayer := hello.InitializeSayer(tt.transform)
+			_, err := sayer.Say(&buf, tt.args.msg)
 			if err != nil {
 				t.Fatalf("could not say \"%s\", failed with %v", hello.Message, err)
 			}

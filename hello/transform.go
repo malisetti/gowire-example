@@ -26,12 +26,8 @@ const (
 	UpperTransform
 )
 
-type TransformerProviderConfig interface {
-	GetTransformerProviderType() TransformType
-}
-
-func NewTransform(cfg TransformerProviderConfig) Transformer {
-	switch cfg.GetTransformerProviderType() {
+func NewTransform(tt TransformType) Transformer {
+	switch tt {
 	case ZeroTransform:
 		return NewZeroTransformer()
 	case NewLineTransform:
