@@ -55,7 +55,6 @@ func TestSay(t *testing.T) {
 			if got := buf.String(); got != tt.want {
 				t.Errorf("Say() = %v, want %v", got, tt.want)
 			}
-			buf.Reset()
 		})
 	}
 }
