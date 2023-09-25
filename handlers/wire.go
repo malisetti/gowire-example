@@ -8,6 +8,6 @@ import (
 )
 
 func InitializeTransformHandler() *TransformHandler {
-	wire.Build(NewTransformHandler)
+	wire.Build(HandlerSet)
 	return &TransformHandler{}
 }
