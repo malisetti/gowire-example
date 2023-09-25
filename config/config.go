@@ -50,7 +50,7 @@ func GetCfg() *Configuration {
 		var transformType int
 		flag.IntVar(&transformType, "transform", int(hello.ExactTransform), "ZeroTransform 0, NewLineTransform 1, ExactTransform 2")
 		flag.Parse()
-		if transformType < int(hello.ZeroTransform) || transformType > int(hello.ExactTransform) {
+		if transformType < int(hello.ZeroTransform) || transformType > int(hello.UpperTransform) {
 			panic("invalid transform")
 		}
 		cfg.TransformerProviderConfig.TransformerProviderType = hello.TransformType(transformType)
