@@ -24,7 +24,7 @@ func NewTransformHandler(cfg config.TransformHandlerConfig) *TransformHandler {
 	}
 }
 
-var HandlerSet = wire.NewSet(
+var TransformHandlerSet = wire.NewSet(
 	NewTransformHandler,
 	wire.Bind(new(ITransformHandler), new(*TransformHandler)),
 )
