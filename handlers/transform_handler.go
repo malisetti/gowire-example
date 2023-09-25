@@ -10,7 +10,9 @@ import (
 	"github.com/google/wire"
 )
 
-type ITransformHandler http.Handler
+type ITransformHandler interface {
+	http.Handler
+}
 
 type TransformHandler struct {
 	cfg config.TransformHandlerConfig
