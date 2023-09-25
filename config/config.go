@@ -8,34 +8,38 @@ import (
 	"github.com/google/wire"
 )
 
-type IConfiguration interface {
-	IServerConfig
-	TransformHandlerConfig
-}
-
-type Configuration struct {
-	TransformerProviderConfig struct {
-		TransformerProviderType hello.TransformType
-	}
-	ServerConfig struct {
-		Port uint
-	}
-}
-
-func (cfg *Configuration) GetTransformerProviderType() hello.TransformType {
-	return cfg.TransformerProviderConfig.TransformerProviderType
-}
-
-func (cfg *Configuration) GetPort() uint {
-	return cfg.ServerConfig.Port
-}
-
 type TransformHandlerConfig interface {
 	GetTransformerProviderType() hello.TransformType
 }
 
 type IServerConfig interface {
 	GetPort() uint
+}
+
+type IConfiguration interface {
+	IServerConfig
+	TransformHandlerConfig
+}
+
+type Configuration struct {
+	TransformerProviderConfig
+	ServerConfig
+}
+
+type TransformerProviderConfig struct {
+	TransformerProviderType hello.TransformType
+}
+
+type ServerConfig struct {
+	Port uint
+}
+
+func (cfg *TransformerProviderConfig) GetTransformerProviderType() hello.TransformType {
+	return cfg.TransformerProviderType
+}
+
+func (cfg *ServerConfig) GetPort() uint {
+	return cfg.Port
 }
 
 var cfg Configuration
