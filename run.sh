@@ -4,5 +4,5 @@ set -ex
 
 ./wire.sh
 ./test.sh
-# -transform 1
+# -port 3333
 go run example/cmd/hello "${@:1}"

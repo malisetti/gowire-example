@@ -10,7 +10,7 @@ import (
 	"github.com/google/wire"
 )
 
-func InitializeServer() *Server {
+func InitializeServer() (*Server, error) {
 	wire.Build(config.ConfigSet, handlers.HandlerSet, ServerSet)
-	return &Server{}
+	return &Server{}, nil
 }

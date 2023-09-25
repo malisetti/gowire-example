@@ -1,16 +1,13 @@
 package config
 
 import (
-	"example/hello"
 	"flag"
 	"sync"
 
 	"github.com/google/wire"
 )
 
-type TransformHandlerConfig interface {
-	GetTransformerProviderType() hello.TransformType
-}
+type TransformHandlerConfig interface{}
 
 type IServerConfig interface {
 	GetPort() uint
@@ -26,16 +23,10 @@ type Configuration struct {
 	ServerConfig
 }
 
-type TransformerProviderConfig struct {
-	TransformerProviderType hello.TransformType
-}
+type TransformerProviderConfig struct{}
 
 type ServerConfig struct {
 	Port uint
-}
-
-func (cfg *TransformerProviderConfig) GetTransformerProviderType() hello.TransformType {
-	return cfg.TransformerProviderType
 }
 
 func (cfg *ServerConfig) GetPort() uint {
@@ -45,19 +36,18 @@ func (cfg *ServerConfig) GetPort() uint {
 var cfg Configuration
 var once sync.Once
 
-func GetCfg() *Configuration {
+const defaultPort = 3333
+
+func GetCfg() (*Configuration, error) {
+	var err error
 	once.Do(func() {
-		var transformType int
-		flag.IntVar(&transformType, "transform", int(hello.ExactTransform), "ZeroTransform 0, NewLineTransform 1, ExactTransform 2")
+		var port uint
+		flag.UintVar(&port, "port", defaultPort, "Port to run. Default is 3333")
 		flag.Parse()
-		if transformType < int(hello.ZeroTransform) || transformType > int(hello.UpperTransform) {
-			panic("invalid transform")
-		}
-		cfg.TransformerProviderConfig.TransformerProviderType = hello.TransformType(transformType)
-		cfg.ServerConfig.Port = 3333
+		cfg.ServerConfig.Port = port
 	})
 
-	return &cfg
+	return &cfg, err
 }
 
 var ConfigSet = wire.NewSet(
