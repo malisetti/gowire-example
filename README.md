@@ -28,6 +28,11 @@ This is a demonstration of a Go application that utilizes the Wire framework for
 - Use composition to express clean requirements
 - Recheck and verify the generated wire `injector`s
 
-## PRs are welcome.
+## References
+- https://github.com/google/wire
+- https://go.dev/blog/wire
+- https://github.com/google/wire/tree/main/docs
+
+## PRs are welcome
 
 - Thank you
