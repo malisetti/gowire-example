@@ -4,12 +4,10 @@
 package handlers
 
 import (
-	"example/config"
-
 	"github.com/google/wire"
 )
 
-func InitializeTransformHandler(cfg config.TransformHandlerConfig) *TransformHandler {
+func InitializeTransformHandler() *TransformHandler {
 	wire.Build(NewTransformHandler)
 	return &TransformHandler{}
 }

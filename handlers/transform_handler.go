@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"example/config"
 	"example/hello"
 	"fmt"
 	"net/http"
@@ -14,14 +13,10 @@ type ITransformHandler interface {
 	http.Handler
 }
 
-type TransformHandler struct {
-	cfg config.TransformHandlerConfig
-}
+type TransformHandler struct{}
 
-func NewTransformHandler(cfg config.TransformHandlerConfig) *TransformHandler {
-	return &TransformHandler{
-		cfg: cfg,
-	}
+func NewTransformHandler() *TransformHandler {
+	return &TransformHandler{}
 }
 
 var TransformHandlerSet = wire.NewSet(

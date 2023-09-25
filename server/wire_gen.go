@@ -15,7 +15,7 @@ import (
 
 func InitializeServer() *Server {
 	configuration := config.GetCfg()
-	transformHandler := handlers.NewTransformHandler(configuration)
+	transformHandler := handlers.NewTransformHandler()
 	server := NewServer(configuration, transformHandler)
 	return server
 }
