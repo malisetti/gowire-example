@@ -18,7 +18,7 @@ func InitializeServer() (*Server, error) {
 	if err != nil {
 		return nil, err
 	}
-	transformHandler := handlers.NewTransformHandler()
+	transformHandler := handlers.NewTransformHandler(configuration)
 	server := NewServer(configuration, transformHandler)
 	return server, nil
 }

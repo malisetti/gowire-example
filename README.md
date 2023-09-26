@@ -19,7 +19,7 @@ This is a demonstration of a Go application that utilizes the Wire framework for
 
 ## Package design considerations
 - Each type declares the interfaces that it depends on and also describes its own behaviour with an interface
-- The type's dependencies are provided by `wire`
+- If the dependency is known, it goes as property. If it not known then as a functon argument. The type's dependencies are provided by `wire`
 - Keep dependencies to only what are required
 
 ## Notes

@@ -1,6 +1,7 @@
 package handlers_test
 
 import (
+	"example/config"
 	"example/handlers"
 	"example/hello"
 	"fmt"
@@ -30,9 +31,10 @@ func TestTransformServer(t *testing.T) {
 		},
 	}
 
+	cfg, _ := config.GetCfg()
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			th := handlers.InitializeTransformHandler()
+			th := handlers.InitializeTransformHandler(cfg)
 			th.ServeHTTP(tt.args.w, tt.args.r)
 			got := tt.args.w.Body.String()
 			if got != tt.want {

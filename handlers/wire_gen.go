@@ -6,9 +6,13 @@
 
 package handlers
 
+import (
+	"example/config"
+)
+
 // Injectors from wire.go:
 
-func InitializeTransformHandler() *TransformHandler {
-	transformHandler := NewTransformHandler()
+func InitializeTransformHandler(cfg config.ITransformHandlerConfig) *TransformHandler {
+	transformHandler := NewTransformHandler(cfg)
 	return transformHandler
 }

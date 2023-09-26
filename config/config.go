@@ -7,7 +7,14 @@ import (
 	"github.com/google/wire"
 )
 
-type TransformHandlerConfig interface{}
+type ITransformHandlerConfig interface{}
+
+type IHandlersConfig interface {
+	ITransformHandlerConfig
+}
+
+type IHelloConfig interface{}
+type IValetConfig interface{}
 
 type IServerConfig interface {
 	GetPort() uint
@@ -15,12 +22,23 @@ type IServerConfig interface {
 
 type IConfiguration interface {
 	IServerConfig
-	TransformHandlerConfig
+	IHandlersConfig
+	IHelloConfig
+	IValetConfig
 }
 
 type Configuration struct {
-	TransformerProviderConfig
+	HandlersConfig
+	HelloConfig
 	ServerConfig
+	ValletConfig
+}
+
+type HelloConfig struct{}
+type ValletConfig struct{}
+
+type HandlersConfig struct {
+	TransformerProviderConfig
 }
 
 type TransformerProviderConfig struct{}
@@ -53,5 +71,8 @@ func GetCfg() (*Configuration, error) {
 var ConfigSet = wire.NewSet(
 	GetCfg,
 	wire.Bind(new(IServerConfig), new(*Configuration)),
-	wire.Bind(new(TransformHandlerConfig), new(*Configuration)),
+	wire.Bind(new(IHandlersConfig), new(*Configuration)),
+	wire.Bind(new(ITransformHandlerConfig), new(*Configuration)),
+	wire.Bind(new(IHelloConfig), new(*Configuration)),
+	wire.Bind(new(IValetConfig), new(*Configuration)),
 )
