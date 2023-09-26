@@ -34,6 +34,8 @@ type Configuration struct {
 	ValletConfig
 }
 
+var _ IConfiguration = (*Configuration)(nil)
+
 type HelloConfig struct{}
 type ValletConfig struct{}
 
